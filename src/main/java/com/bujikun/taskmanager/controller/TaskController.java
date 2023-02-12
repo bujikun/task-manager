@@ -1,7 +1,7 @@
 package com.bujikun.taskmanager.controller;
 
 import com.bujikun.taskmanager.dto.TaskDTO;
-import com.bujikun.taskmanager.service.contract.service.implementation.TaskService;
+import com.bujikun.taskmanager.service.implementation.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

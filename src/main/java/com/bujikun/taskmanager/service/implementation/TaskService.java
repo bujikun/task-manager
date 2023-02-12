@@ -1,23 +1,35 @@
-package com.bujikun.taskmanager.service.contract.service.implementation;
+package com.bujikun.taskmanager.service.implementation;
 
 import com.bujikun.taskmanager.dto.TaskDTO;
 import com.bujikun.taskmanager.entity.Task;
 import com.bujikun.taskmanager.exception.task.TaskNotFoundException;
 import com.bujikun.taskmanager.repository.TaskRepository;
 import com.bujikun.taskmanager.service.contract.ITaskService;
+import com.bujikun.taskmanager.util.Util;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class TaskService implements ITaskService {
     private final TaskRepository taskRepository;
     @Override
-    public List<Task> findAll() {
-        return taskRepository.findAll();
+    public List<TaskDTO> findAll() {
+        return taskRepository.findAll(Sort.by(Sort.Direction.DESC,"createdOn")).stream()
+                .map(t-> TaskDTO.builder()
+                        .title(t.getTitle())
+                        .description(t.getDescription())
+                        .status(t.getStatus())
+                        .slug(t.getSlug())
+                        .createdOn(Util.formatDateTime(t.getCreatedOn()))
+                        .updatedOn(Util.formatDateTime(t.getUpdatedOn()))
+                        .build())
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -12,4 +12,6 @@ public class TaskDTO{
     private String description;
     private Boolean status;
     private UUID slug;
+    private String createdOn;
+    private String updatedOn;
 }

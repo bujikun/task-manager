@@ -6,7 +6,7 @@ import com.bujikun.taskmanager.entity.Task;
 import java.util.List;
 
 public interface ITaskService {
-    List<Task> findAll();
+    List<TaskDTO> findAll();
     Task createTask(TaskDTO taskDTO);
     void deleteTask(TaskDTO taskDTO);
     Task updateTask(TaskDTO taskDTO);
