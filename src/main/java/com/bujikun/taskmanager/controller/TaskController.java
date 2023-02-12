@@ -5,10 +5,7 @@ import com.bujikun.taskmanager.service.contract.service.implementation.TaskServi
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/tasks")
@@ -22,11 +19,12 @@ public class TaskController {
     }
 
     @GetMapping("/add")
-    public String getTaskAdditionForm(){
+    public String getTaskAdditionForm(Model page){
+        page.addAttribute("taskdto",new TaskDTO());
         return "/task/add";
     }
-    @PostMapping
-    public String createNewTask(@RequestBody TaskDTO taskDTO, Model page){
+    @PostMapping(value = "/add")
+    public String createNewTask(@ModelAttribute TaskDTO taskDTO, Model page){
         //do validation
         taskService.createTask(taskDTO);
         page.addAttribute("tasks",taskService.findAll());

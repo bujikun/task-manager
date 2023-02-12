@@ -11,7 +11,7 @@
 <div layout:fragment="page-content" class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
     <div><span class="display-6">Task management platform</span></div>
     <hr/>
-    <button class="btn btn-outline-primary my-1">Add new task</button>
+    <a class="btn btn-outline-primary my-1" th:href="@{/tasks/add}"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add new task</a>
     <div class="task-list">
         <ul th:each="task:${tasks}" class="list-group">
             <li class="list-group-item borderless">
