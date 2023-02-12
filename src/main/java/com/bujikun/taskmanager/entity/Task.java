@@ -1,6 +1,5 @@
 package com.bujikun.taskmanager.entity;
 
-import com.bujikun.taskmanager.dto.TaskDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
