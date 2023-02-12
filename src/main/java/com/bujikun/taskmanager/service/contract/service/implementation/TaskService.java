@@ -2,6 +2,7 @@ package com.bujikun.taskmanager.service.contract.service.implementation;
 
 import com.bujikun.taskmanager.dto.TaskDTO;
 import com.bujikun.taskmanager.entity.Task;
+import com.bujikun.taskmanager.exception.task.TaskNotFoundException;
 import com.bujikun.taskmanager.repository.TaskRepository;
 import com.bujikun.taskmanager.service.contract.ITaskService;
 import lombok.RequiredArgsConstructor;
@@ -42,13 +43,15 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public Optional<Task> findTaskBySlug(TaskDTO taskDTO) {
-        return Optional.empty();
+    public Task findTaskBySlug(TaskDTO taskDTO) {
+        return taskRepository.findTaskBySlug(taskDTO.getSlug())
+                .orElseThrow(()->new TaskNotFoundException("Task with slug:  "+taskDTO.getSlug() +" " +
+                        "could no t be found!"));
     }
 
     @Override
-    public Optional<Task> findTaskById(TaskDTO taskDTO) {
-        return Optional.empty();
+    public Task findTaskById(TaskDTO taskDTO) {
+        return null;
     }
 
     @Override

@@ -11,8 +11,8 @@ public interface ITaskService {
     Task createTask(TaskDTO taskDTO);
     void deleteTask(TaskDTO taskDTO);
     Task updateTask(TaskDTO taskDTO);
-    Optional<Task> findTaskBySlug(TaskDTO taskDTO);
-    Optional<Task> findTaskById(TaskDTO taskDTO);
+    Task findTaskBySlug(TaskDTO taskDTO);
+    Task findTaskById(TaskDTO taskDTO);
     void updateTaskStatus(TaskDTO taskDTO);
 
 }
