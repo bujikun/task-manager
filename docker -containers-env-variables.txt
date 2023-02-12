@@ -1,0 +1,19 @@
+##db server env
+##db/.env
+MYSQL_DATABASE=task_manager
+MYSQL_USER=svc_task_manager
+MYSQL_PASSWORD=A*&!*782GsHDns**22£!£!£dsds
+MYSQL_ROOT_PASSWORD=ga13@$@£3:"dha@£!a
+HOST_CACHE_SIZE=0
+
+##adminer/adminer.env
+DATABASE_USER=svc_task_manager
+DATABASE_PASSWORD=A*&!*782GsHDns**22£!£!£dsds
+DATABASE_NAME=task_manager
+ADMINER_DEFAULT_SERVER=taskManagerDBServer
+
+##app server env
+##.env
+SPRING_DATASOURCE_URL=jdbc:mysql://taskManagerDBServer:3306/task_manager?useSSL=false&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+SPRING_DATASOURCE_USERNAME=svc_task_manager
+SPRING_DATASOURCE_PASSWORD=A*&!*782GsHDns**22£!£!£dsds

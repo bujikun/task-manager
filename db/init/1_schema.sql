@@ -1,0 +1,2 @@
+-- This script will be run by the docker container
+-- when setting it up the first time

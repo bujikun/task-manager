@@ -1,0 +1,63 @@
+version: "3.9"
+#individual services in isolated containers
+services:
+  #database server that hosts the actual database
+  db:
+    container_name: taskManagerDBServer
+    build: db
+    restart: unless-stopped
+    ports:
+      - "3308:3306" #Exposing this for IntelliJ Datasource Setup
+    env_file:
+      - db/.db.env
+    volumes:
+      - db_data:/var/lib/mysql
+      - db_config:/etc/mysql/conf.d
+      - ./db/init/1_schema.sql:/docker-entrypoint-initdb.d/1_schema.sql
+    networks:
+      - db-network
+
+  #the spring boot app
+  backend:
+    container_name: taskManagerAppServer
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    #mount directories during development
+    volumes:
+      - ./:/app/
+      - ./.m2:/root/.m2
+    networks:
+      - db-network
+    depends_on:
+      - db
+    restart: on-failure
+    env_file:
+      - ./.env
+    ports:
+      - "8085:8080"
+      - "35729:35729" #for dev tools live reload
+      - "5005:5005" #for JVM, Debugger
+    tty: true
+    command: sh run.sh
+
+    #for db administration
+  adminer:
+    container_name: taskManagerAdminerServer
+    image: adminer
+    restart: always
+    ports:
+      - "8086:8080"
+    networks:
+      - db-network
+    depends_on:
+      - db
+    env_file:
+      - adminer/.adminer.env
+
+#named volumes keeping the data alive after a restart
+volumes:
+  db_data:
+  db_config:
+networks:
+  db-network:
