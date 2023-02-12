@@ -13,6 +13,5 @@ public interface ITaskService {
     Task updateTask(TaskDTO taskDTO);
     Task findTaskBySlug(TaskDTO taskDTO);
     Task findTaskById(TaskDTO taskDTO);
-    void updateTaskStatus(TaskDTO taskDTO);
 
 }

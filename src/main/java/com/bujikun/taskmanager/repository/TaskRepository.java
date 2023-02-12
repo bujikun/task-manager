@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface TaskRepository extends JpaRepository<Task,Integer> {
     Optional<Task> findTaskBySlug(UUID slug);
+    void deleteTaskBySlug(UUID slug);
 }

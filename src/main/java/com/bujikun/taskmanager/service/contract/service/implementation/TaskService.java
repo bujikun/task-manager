@@ -34,12 +34,20 @@ public class TaskService implements ITaskService {
 
     @Override
     public void deleteTask(TaskDTO taskDTO) {
-
+        //check if task exist to find to report error when findBySlug throws exception
+        var task = taskRepository.findTaskBySlug(taskDTO.getSlug());
+         taskRepository.deleteTaskBySlug(task.get().getSlug());
     }
 
     @Override
     public Task updateTask(TaskDTO taskDTO) {
-        return null;
+        //find the task to be updated first
+        var task = taskRepository.findTaskBySlug(taskDTO.getSlug()).get();
+        task.setTitle(taskDTO.getTitle());
+        task.setDescription(taskDTO.getDescription());
+        task.setStatus(taskDTO.getStatus());
+        //insert into db
+        return taskRepository.save(task);
     }
 
     @Override
@@ -53,9 +61,5 @@ public class TaskService implements ITaskService {
     public Task findTaskById(TaskDTO taskDTO) {
         return null;
     }
-
-    @Override
-    public void updateTaskStatus(TaskDTO taskDTO) {
-
-    }
+    
 }
