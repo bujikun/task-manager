@@ -9,8 +9,28 @@
 </head>
 <body>
 <div layout:fragment="page-content" class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-    <div><span class="display-4">Task management platform</span></div>
-
+    <div><span class="display-6">Task management platform</span></div>
+    <hr/>
+    <button class="btn btn-outline-primary my-1">Add new task</button>
+    <div class="task-list">
+        <ul th:each="task:${tasks}" class="list-group">
+            <li class="list-group-item borderless">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title d-flex justify-content-between align-items-start">
+                            <h5 th:text="${task.getTitle()}" class="ms-2 me-auto" ></h5>
+                            <span th:text="${task.getStatus()}" class="badge bg-danger rounded-pill"></span>
+                        </div>
+                        <div class="card-text">
+                            <p th:text="${task.getDescription()}"></p>
+                        </div>
+                        <hr/>
+                            <span th:text="${task.getCreatedOn()}" class="text-muted"></span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>
 </body>
 </html>
