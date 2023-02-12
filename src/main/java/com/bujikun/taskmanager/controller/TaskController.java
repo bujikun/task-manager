@@ -21,7 +21,7 @@ public class TaskController {
         return "task/index";
     }
 
-    @GetMapping("/tasks/add")
+    @GetMapping("/add")
     public String getTaskAdditionForm(){
         return "/task/add";
     }

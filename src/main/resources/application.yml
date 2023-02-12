@@ -21,3 +21,5 @@ spring:
     jpa:
       repositories:
         enabled: true
+  thymeleaf:
+    cache: false
