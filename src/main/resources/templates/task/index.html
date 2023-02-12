@@ -12,7 +12,8 @@
     <div><span class="display-6">Task management platform</span></div>
     <hr/>
     <div class="d-flex justify-content-end align-items-end my-1">
-        <a class="btn btn-outline-primary" th:href="@{/tasks/add}"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add new task</a>
+        <a class="btn btn-outline-primary" th:href="@{/tasks/add}"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add new
+            task</a>
     </div>
     <div class="my-1">
         <ul th:each="task:${tasks}" class="list-group">
@@ -20,16 +21,21 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title d-flex justify-content-between align-items-start">
-                            <h5 th:text="${task.getTitle()}" class="ms-2 me-auto" ></h5>
+                            <h5 th:text="${task.getTitle()}" class="ms-2 me-auto"></h5>
                             <div>
-                                <span><a><i class="fas fa-edit "></i></a></span>&nbsp;
-                                <span><a><i class="fas fa-trash"></i></a></span>&nbsp;
+                                <span><a th:href="@{/tasks/edit/{slug}(slug=${task.getSlug()})}" class="task-edit" title="Edit">
+                                    <i class="fas fa-edit"></i></a>
+                                </span>&nbsp;
+
+                                <span><a th:href="@{/tasks/delete/{slug}(slug=${task.getSlug()})}" class="task-delete" title="Delete">
+                                    <i class="fas fa-trash"></i></a>
+                                </span>&nbsp;
                             </div>
                         </div>
                         <div class="card-text">
                             <p th:text="${task.getDescription()}"></p>
                         </div>
-                        <div >
+                        <div>
                             <span th:text="${task.getStatus()}" class="badge bg-danger rounded-pill"></span>
 
                             <span th:text="${task.getCreatedOn()}" class="text-muted float-end"></span>
