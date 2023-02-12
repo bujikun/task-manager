@@ -6,6 +6,7 @@ import com.bujikun.taskmanager.exception.task.TaskNotFoundException;
 import com.bujikun.taskmanager.repository.TaskRepository;
 import com.bujikun.taskmanager.service.contract.ITaskService;
 import com.bujikun.taskmanager.util.Util;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TaskService implements ITaskService {
     private final TaskRepository taskRepository;
     @Override
@@ -44,9 +46,9 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public void deleteTask(TaskDTO taskDTO) {
+    public void deleteTaskBySlug(UUID slug) {
         //check if task exist to find to report error when findBySlug throws exception
-        var task = taskRepository.findTaskBySlug(taskDTO.getSlug());
+        var task = taskRepository.findTaskBySlug(slug);
          taskRepository.deleteTaskBySlug(task.get().getSlug());
     }
 
@@ -62,14 +64,14 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public Task findTaskBySlug(TaskDTO taskDTO) {
-        return taskRepository.findTaskBySlug(taskDTO.getSlug())
-                .orElseThrow(()->new TaskNotFoundException("Task with slug:  "+taskDTO.getSlug() +" " +
+    public Task findTaskBySlug(UUID slug) {
+        return taskRepository.findTaskBySlug(slug)
+                .orElseThrow(()->new TaskNotFoundException("Task with slug:  "+slug +" " +
                         "could no t be found!"));
     }
 
     @Override
-    public Task findTaskById(TaskDTO taskDTO) {
+    public Task findTaskById(Integer slug) {
         return null;
     }
 

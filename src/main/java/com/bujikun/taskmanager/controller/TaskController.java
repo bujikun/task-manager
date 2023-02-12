@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @Controller
 @RequestMapping("/tasks")
 @RequiredArgsConstructor
@@ -29,6 +31,12 @@ public class TaskController {
         taskService.createTask(taskDTO);
         page.addAttribute("tasks",taskService.findAll());
         return "task/index";
+    }
+
+    @GetMapping("/delete/{slug}")
+    public String deleteTask(@PathVariable String slug){
+        taskService.deleteTaskBySlug(UUID.fromString(slug));
+        return "redirect:/tasks";
     }
 
 
