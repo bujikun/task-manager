@@ -1,8 +1,9 @@
-html{
-    font-family: Roboto;
+
+*{
     font-size: 1rem;
-    font-weight: normal;
+    font-weight: 200;
 }
+
 
 li.borderless{
     border: none;
