@@ -4,14 +4,18 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+/**
+ * @author Newton Bujiku
+ * @since 2023
+ */
 public class Util {
-    public static String formatDateTime(LocalDateTime dateTime){
+    public static String formatDateTime(LocalDateTime dateTime) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         var createdOnOptional = Optional.ofNullable(dateTime);
-        if(createdOnOptional.isPresent()){
+        if (createdOnOptional.isPresent()) {
             return df.format(dateTime);
         }
-      return null;
+        return null;
     }
 
 }

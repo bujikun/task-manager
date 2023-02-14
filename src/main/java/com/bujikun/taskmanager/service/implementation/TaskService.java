@@ -17,15 +17,20 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * @author Newton Bujiku
+ * @since 2023
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class TaskService implements ITaskService {
     private final TaskRepository taskRepository;
+
     @Override
     public List<TaskDTO> findAll() {
-        return taskRepository.findAll(Sort.by(Sort.Direction.DESC,"createdOn")).stream()
-                .map(t-> TaskDTO.builder()
+        return taskRepository.findAll(Sort.by(Sort.Direction.DESC, "createdOn")).stream()
+                .map(t -> TaskDTO.builder()
                         .title(t.getTitle())
                         .description(t.getDescription())
                         .status(t.getStatus().getValue())
@@ -45,7 +50,7 @@ public class TaskService implements ITaskService {
                 .status(Status.valueOf(taskDTO.getStatus()))
                 .priority(Priority.valueOf(taskDTO.getPriority()))
                 .build();
-         taskRepository.save(task);
+        taskRepository.save(task);
     }
 
     @Override
@@ -56,7 +61,7 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public void updateTask(String id,TaskDTO taskDTO) {
+    public void updateTask(String id, TaskDTO taskDTO) {
         //find the task to be updated first
         var task = findTaskById(id);
         task.setTitle(taskDTO.getTitle());
@@ -64,21 +69,21 @@ public class TaskService implements ITaskService {
         task.setStatus(Status.valueOf(taskDTO.getStatus()));
         task.setPriority(Priority.valueOf(taskDTO.getPriority()));
         //insert into db
-         taskRepository.save(task);
+        taskRepository.save(task);
     }
 
     @Override
     public Task findTaskById(String id) {
-        UUID uuid ;
-        try{
-            uuid= UUID.fromString(id);
+        UUID uuid;
+        try {
+            uuid = UUID.fromString(id);
 
-        }catch (IllegalArgumentException e){
-            throw new TaskNotFoundException("Task with slug:  "+id +" " +
+        } catch (IllegalArgumentException e) {
+            throw new TaskNotFoundException("Task with slug:  " + id + " " +
                     "could no t be found!");
         }
-         return taskRepository.findById(uuid)
-                .orElseThrow(()->new TaskNotFoundException("Task with slug:  "+id +" " +
+        return taskRepository.findById(uuid)
+                .orElseThrow(() -> new TaskNotFoundException("Task with slug:  " + id + " " +
                         "could no t be found!"));
     }
 

@@ -6,6 +6,10 @@ import jakarta.persistence.Converter;
 
 import java.util.stream.Stream;
 
+/**
+ * @author Newton Bujiku
+ * @since 2023
+ */
 @Converter(autoApply = true)
 public class StatusConverter implements AttributeConverter<Status, String> {
     @Override
@@ -23,7 +27,7 @@ public class StatusConverter implements AttributeConverter<Status, String> {
             return null;
         }
         return Stream.of(Status.values())
-                .filter(s->s.getValue().equals(value))
+                .filter(s -> s.getValue().equals(value))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }

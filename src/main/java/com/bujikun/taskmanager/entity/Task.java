@@ -10,6 +10,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * @author Newton Bujiku
+ * @since 2023
+ */
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -18,7 +23,7 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Builder
 @Entity
-@Table(name="tasks")
+@Table(name = "tasks")
 public class Task {
     @Id
     @GeneratedValue
@@ -27,9 +32,9 @@ public class Task {
     private String title;
     @Column(nullable = false)
     private String description;
-    @Column(nullable = false,length = 20)
+    @Column(nullable = false, length = 20)
     private Status status;
-    @Column(nullable = false,length = 20)
+    @Column(nullable = false, length = 20)
     private Priority priority;
     @CreationTimestamp
     private LocalDateTime createdOn;
