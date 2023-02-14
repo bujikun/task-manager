@@ -1,10 +1,11 @@
 package com.bujikun.taskmanager.entity;
 
+import com.bujikun.taskmanager.enumeration.Priority;
+import com.bujikun.taskmanager.enumeration.Status;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,16 +21,16 @@ import java.util.UUID;
 @Table(name="tasks")
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue
+    private UUID id;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
     private String description;
-    @Column(nullable = false,unique = true)
-    private UUID slug;
-    @Column(nullable = false,length = 1)
-    private Boolean status;
+    @Column(nullable = false,length = 20)
+    private Status status;
+    @Column(nullable = false,length = 20)
+    private Priority priority;
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp

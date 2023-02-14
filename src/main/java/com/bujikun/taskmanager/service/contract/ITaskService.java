@@ -9,9 +9,8 @@ import java.util.UUID;
 public interface ITaskService {
     List<TaskDTO> findAll();
     void createTask(TaskDTO taskDTO);
-    void deleteTaskBySlug(UUID slug);
+    void deleteTask(UUID id);
     void updateTask(TaskDTO taskDTO);
-    Task findTaskBySlug(UUID slug);
-    Task findTaskById(Integer id);
+    Task findTaskById(UUID slug);
 
 }

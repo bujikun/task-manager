@@ -33,22 +33,22 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
-    @GetMapping("/delete/{slug}")
-    public String deleteTask(@PathVariable String slug){
-        taskService.deleteTaskBySlug(UUID.fromString(slug));
+    @GetMapping("/delete/{id}")
+    public String deleteTask(@PathVariable UUID id){
+        taskService.deleteTask(id);
         return "redirect:/tasks";
     }
 
-    @GetMapping("/edit/{slug}")
-    public String getTaskToEdit(@PathVariable String slug, Model page){
-        var task = taskService.findTaskBySlug(UUID.fromString(slug));
+    @GetMapping("/edit/{id}")
+    public String getTaskToEdit(@PathVariable UUID id, Model page){
+        var task = taskService.findTaskById(id);
         page.addAttribute("taskdto",task);
         return "task/edit";
     }
     @PostMapping("/edit/{slug}")
     public String editTask(@ModelAttribute TaskDTO taskDTO, @PathVariable("slug")UUID slug, Model page){
         //do validation
-        taskDTO.setSlug(slug);
+        taskDTO.setId(slug);
         taskService.updateTask(taskDTO);
         page.addAttribute("tasks",taskService.findAll());
         return "redirect:/tasks";

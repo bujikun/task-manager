@@ -2,6 +2,8 @@ package com.bujikun.taskmanager.service.implementation;
 
 import com.bujikun.taskmanager.dto.TaskDTO;
 import com.bujikun.taskmanager.entity.Task;
+import com.bujikun.taskmanager.enumeration.Priority;
+import com.bujikun.taskmanager.enumeration.Status;
 import com.bujikun.taskmanager.exception.task.TaskNotFoundException;
 import com.bujikun.taskmanager.repository.TaskRepository;
 import com.bujikun.taskmanager.service.contract.ITaskService;
@@ -26,8 +28,9 @@ public class TaskService implements ITaskService {
                 .map(t-> TaskDTO.builder()
                         .title(t.getTitle())
                         .description(t.getDescription())
-                        .status(t.getStatus())
-                        .slug(t.getSlug())
+                        .status(t.getStatus().getValue())
+                        .priority(t.getPriority().getValue())
+                        .id(t.getId())
                         .createdOn(Util.formatDateTime(t.getCreatedOn()))
                         .updatedOn(Util.formatDateTime(t.getUpdatedOn()))
                         .build())
@@ -39,40 +42,37 @@ public class TaskService implements ITaskService {
         var task = Task.builder()
                 .title(taskDTO.getTitle())
                 .description(taskDTO.getDescription())
-                .status(taskDTO.getStatus())
-                .slug(UUID.randomUUID())
+                .status(Status.valueOf(taskDTO.getStatus()))
+                .priority(Priority.valueOf(taskDTO.getPriority()))
                 .build();
          taskRepository.save(task);
     }
 
     @Override
-    public void deleteTaskBySlug(UUID slug) {
-        //check if task exist to find to report error when findBySlug throws exception
-        var task = taskRepository.findTaskBySlug(slug);
-         taskRepository.deleteTaskBySlug(task.get().getSlug());
+    public void deleteTask(UUID id) {
+//check if task exist to find to report error when findBySlug throws exception
+        var task = findTaskById(id);
+        taskRepository.delete(task);
     }
 
     @Override
     public void updateTask(TaskDTO taskDTO) {
         //find the task to be updated first
-        var task = taskRepository.findTaskBySlug(taskDTO.getSlug()).get();
+        var task = findTaskById(taskDTO.getId());
         task.setTitle(taskDTO.getTitle());
         task.setDescription(taskDTO.getDescription());
-        task.setStatus(taskDTO.getStatus());
+        task.setStatus(Status.valueOf(taskDTO.getStatus()));
+        task.setPriority(Priority.valueOf(taskDTO.getPriority()));
         //insert into db
          taskRepository.save(task);
     }
 
     @Override
-    public Task findTaskBySlug(UUID slug) {
-        return taskRepository.findTaskBySlug(slug)
-                .orElseThrow(()->new TaskNotFoundException("Task with slug:  "+slug +" " +
+    public Task findTaskById(UUID id) {
+         return taskRepository.findById(id)
+                .orElseThrow(()->new TaskNotFoundException("Task with slug:  "+id +" " +
                         "could no t be found!"));
     }
 
-    @Override
-    public Task findTaskById(Integer slug) {
-        return null;
-    }
 
 }

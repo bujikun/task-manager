@@ -24,7 +24,7 @@
   <div class="add-form-section mx-4 p-4">
     <div class="mb-1">
       <h6 class="display-6 my-2 mb-3">Edit task</h6></div>
-    <form method="post" th:action="@{/tasks/edit/{slug}(slug=${taskdto.getSlug()})}" th:object="${taskdto}">
+    <form method="post" th:action="@{/tasks/edit/{slug}(slug=${taskdto.getId()})}" th:object="${taskdto}">
       <div class="my-1">
         <label for="title" class="form-label">Title</label>
         <input type="text" class="form-control" id="title" placeholder="" name="title" required

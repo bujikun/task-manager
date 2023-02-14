@@ -65,11 +65,11 @@
                             </div>
                         </div>
                         <div class="">
-                                <span><a th:href="@{/tasks/edit/{slug}(slug=${task.getSlug()})}" class="task-edit"
+                                <span><a th:href="@{/tasks/edit/{slug}(slug=${task.getId()})}" class="task-edit"
                                          title="Edit">
                                     <i class="fas fa-edit"></i></a></span>&nbsp;
                             <span>
-                                    <a th:href="@{/tasks/delete/{slug}(slug=${task.getSlug()})}" class="task-delete"
+                                    <a th:href="@{/tasks/delete/{slug}(slug=${task.getId()})}" class="task-delete"
                                        title="Delete">
                                     <i class="fas fa-trash"></i></a>
                                 </span>
