@@ -1,6 +1,7 @@
 package com.bujikun.taskmanager.controller;
 
 import com.bujikun.taskmanager.dto.TaskDTO;
+import com.bujikun.taskmanager.enumeration.Status;
 import com.bujikun.taskmanager.service.implementation.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,21 @@ public class TaskController {
     }
     @GetMapping
     public String getAll(Model page){
-        page.addAttribute("tasks",taskService.findAll());
+        var allTasks =taskService.findAll();
+        var completed = allTasks.stream()
+                        .filter(t->t.getStatus().equals(Status.COMPLETED.getValue()))
+                                .count();
+        var inProgress = allTasks.stream()
+                .filter(t->t.getStatus().equals(Status.IN_PROGRESS.getValue()))
+                .count();
+        var notStarted = allTasks.stream()
+                .filter(t->t.getStatus().equals(Status.NOT_STARTED.getValue()))
+                .count();
+
+        page.addAttribute("tasks",allTasks);
+        page.addAttribute("completed",completed);
+        page.addAttribute("inProgress",inProgress);
+        page.addAttribute("notStarted",notStarted);
         return "task/index";
     }
 

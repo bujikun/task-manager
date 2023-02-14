@@ -1,8 +1,8 @@
 :root{
-    --completed: rgba(0, 128, 0, 0.95);
-    --not-started: rgba(227, 24, 70, 0.94);
-    --ongoing:rgba(255, 195, 54, 0.97);
-    --tm-white:rgba(255, 255, 255, 0.95);
+    --color-completed: rgba(0, 128, 0, 0.95);
+    --color-not-started: rgba(227, 24, 70, 0.94);
+    --color-in-progress:rgba(255, 195, 54, 0.97);
+    --color-tm-white:rgba(255, 255, 255, 0.95);
 }
 *{
     font-size: 1rem;
@@ -16,16 +16,16 @@ body{
     color: #333333;
 }
 
-li.not-started{
-    border-left: .25rem solid var(--not-started);
+.left-border-not-started{
+    border-left: .25rem solid var(--color-not-started);
 }
 
-li.completed{
-    border-left: .25rem solid var(--completed);
+.left-border-border-completed{
+    border-left: .25rem solid var(--color-completed);
 }
 
-li.borderless{
-    border-left: .25rem solid var(--ongoing);
+.left-border-in-progress{
+    border-left: .25rem solid var(--color-in-progress);
 }
 
 .hidden{
@@ -53,7 +53,7 @@ div>span>a{
 }
 
 .tm-card,.add-form-section{
-    background: var(--tm-white);
+    background: var(--color-tm-white);
     border-radius: .25rem;
     box-shadow: 0 .5rem .5rem rgba(0,0,0,.2);
 }
@@ -77,18 +77,18 @@ div>span>a{
     max-width: 10rem;
     color: #ffffff;
 }
-.not-started,.ongoing,.completed{
+.box-not-started,.box-in-progress,.box-completed{
     margin-bottom: 0;
     border-radius: .5rem;
 }
-.not-started{
-    background-color: var(--not-started);
+.box-not-started{
+    background-color: var(--color-not-started);
 }
-.ongoing{
-    background-color: var(--ongoing);
+.box-in-progress{
+    background-color: var(--color-in-progress);
 }
-.completed{
-    background-color: var(--completed);
+.box-completed{
+    background-color: var(--color-completed);
 }
 .form-label{
     font-weight: 400;
@@ -99,6 +99,15 @@ div>span>a{
 .nav-item{
     font-weight: 400;
     font-size: 1.2rem;
+}
+
+.priority-pill{
+    background-color: rgba(150, 150, 150, 0.9);
+}
+
+.no-tasks{
+    color: var(--color-tm-white);
+    padding: 3rem;
 }
 
 
