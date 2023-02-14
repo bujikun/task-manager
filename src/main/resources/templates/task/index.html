@@ -10,38 +10,65 @@
 <body>
 <div layout:fragment="page-content" class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
     <div><span class="display-6">Task management platform</span></div>
-    <hr/>
+
     <div class="d-flex justify-content-end align-items-end my-1">
         <a class="btn btn-outline-primary" th:href="@{/tasks/add}"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add new
             task</a>
     </div>
-    <div class="my-1">
-        <ul th:each="task:${tasks}" class="list-group">
-            <li class="list-group-item borderless my-1">
-                <div class="card task-list-item">
-                    <div class="card-body">
-                        <div class="card-title d-flex justify-content-between align-items-start">
-                            <h5 th:text="${task.getTitle()}" class="ms-2 me-auto"></h5>
-                            <div>
-                                <span><a th:href="@{/tasks/edit/{slug}(slug=${task.getSlug()})}" class="task-edit" title="Edit">
-                                    <i class="fas fa-edit"></i></a>
-                                </span>&nbsp;
+<!--    <div class="my-1">-->
+<!--            <div th:each="task:${tasks}" class="tm-card">-->
+<!--                <div class="tm-card-header">-->
+<!--                        <div class="tm-card-title-pill">-->
+<!--                            <h3 class="tm-card-title">My first task</h3>-->
+<!--                            <div class="tm-card-pill">Incomplete</div>-->
+<!--                        </div>-->
+<!--                        <div class="tm-card-action">-->
+<!--                            <span class="edit">Edit</span>-->
+<!--                            <span class="delete">Delete</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="tm-card-body">-->
+<!--                        <p class="tm-card-desc">Lorem, ipsum dolor sit amet consectetur-->
+<!--                            adipisicing elit. Nesciunt, aperiam et provident veniam ut ratione?</p>-->
+<!--                    </div>-->
+<!--                    <div class="tm-card-footer">-->
+<!--                        <span>Created on</span>-->
+<!--                    </div>-->
+<!--            </div>-->
+<!--    </div>-->
 
-                                <span><a th:href="@{/tasks/delete/{slug}(slug=${task.getSlug()})}" class="task-delete" title="Delete">
-                                    <i class="fas fa-trash"></i></a>
-                                </span>&nbsp;
+    <div class="my-1">
+        <ul class="list-group">
+            <li th:each="task:${tasks}" class="list-group-item borderless card tm-card my-1">
+                <div class="task-list-item">
+                    <div class="card-title d-flex flex-row justify-content-between"><!--title-->
+                        <div class="d-flex flex-row justify-content-between align-baseline tm-card-title-pill">
+                            <div class="mt-1 me-3 pb-0" >
+                                <h6 th:text="${task.getTitle()}"></h6>&nbsp;&nbsp;
+                            </div>
+                            <div>
+                                <span th:text="${task.getStatus()}" class="badge bg-danger text-bg-danger px-2"></span>
                             </div>
                         </div>
-                        <div class="card-text">
-                            <p th:text="${task.getDescription()}"></p>
+                        <div class="">
+                                <span><a th:href="@{/tasks/edit/{slug}(slug=${task.getSlug()})}" class="task-edit"
+                                         title="Edit">
+                                    <i class="fas fa-edit"></i></a></span>&nbsp;
+                            <span>
+                                    <a th:href="@{/tasks/delete/{slug}(slug=${task.getSlug()})}" class="task-delete"
+                                       title="Delete">
+                                    <i class="fas fa-trash"></i></a>
+                                </span>
                         </div>
-                        <div>
-                            <span th:text="${task.getStatus()}" class="badge bg-danger rounded-pill"></span>
-
-                            <span th:text="${task.getCreatedOn()}" class="text-muted float-end"></span>
-                        </div>
-
                     </div>
+                    <div><!--body-->
+                        <p th:text="${task.getDescription()}"  class="tm-card-desc"></p>
+                    </div>
+                    <div class=""><!--footer-->
+                                <span th:text="'Created on: ' + ${task.getCreatedOn()}" class="text-muted tm-card-created-on"></span>
+                    </div>
+
+
                 </div>
             </li>
         </ul>
