@@ -1,4 +1,8 @@
-
+:root{
+    --completed: rgba(0, 128, 0, 0.95);
+    --not-started: rgba(227, 24, 70, 0.94);
+    --ongoing:rgba(255, 195, 54, 0.97);
+}
 *{
     font-size: 1rem;
     font-weight: 200;
@@ -12,15 +16,15 @@ body{
 }
 
 li.not-started{
-    border-left: .25rem solid #E31846FF;
+    border-left: .25rem solid var(--not-started);
 }
 
 li.completed{
-    border-left: .25rem solid green;
+    border-left: .25rem solid var(--completed);
 }
 
 li.borderless{
-    border-left: .25rem solid #FFDC1FFF;
+    border-left: .25rem solid var(--ongoing);
 }
 
 .hidden{
@@ -64,3 +68,25 @@ div>span>a{
 .tm-card-created-on{
     font-size: .8rem ;
 }
+
+.summary-box{
+    height: 8rem;
+    max-height: 10rem;
+    width: 8rem;
+    max-width: 10rem;
+    color: #ffffff;
+}
+.not-started,.ongoing,.completed{
+    margin-bottom: 0;
+    border-radius: .5rem;
+}
+.not-started{
+    background-color: var(--not-started);
+}
+.ongoing{
+    background-color: var(--ongoing);
+}
+.completed{
+    background-color: var(--completed);
+}
+
