@@ -14,6 +14,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TaskController {
     private final TaskService taskService;
+    @GetMapping("/")
+    public String getAllRedirect(){
+        return "redirect:/tasks";
+    }
     @GetMapping
     public String getAll(Model page){
         page.addAttribute("tasks",taskService.findAll());
