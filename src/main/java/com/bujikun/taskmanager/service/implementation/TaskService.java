@@ -35,14 +35,14 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public Task createTask(TaskDTO taskDTO) {
+    public void createTask(TaskDTO taskDTO) {
         var task = Task.builder()
                 .title(taskDTO.getTitle())
                 .description(taskDTO.getDescription())
                 .status(taskDTO.getStatus())
                 .slug(UUID.randomUUID())
                 .build();
-        return taskRepository.save(task);
+         taskRepository.save(task);
     }
 
     @Override
@@ -53,14 +53,14 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public Task updateTask(TaskDTO taskDTO) {
+    public void updateTask(TaskDTO taskDTO) {
         //find the task to be updated first
         var task = taskRepository.findTaskBySlug(taskDTO.getSlug()).get();
         task.setTitle(taskDTO.getTitle());
         task.setDescription(taskDTO.getDescription());
         task.setStatus(taskDTO.getStatus());
         //insert into db
-        return taskRepository.save(task);
+         taskRepository.save(task);
     }
 
     @Override

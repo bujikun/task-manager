@@ -2,6 +2,7 @@
     --completed: rgba(0, 128, 0, 0.95);
     --not-started: rgba(227, 24, 70, 0.94);
     --ongoing:rgba(255, 195, 54, 0.97);
+    --tm-white:rgba(255, 255, 255, 0.95);
 }
 *{
     font-size: 1rem;
@@ -48,12 +49,12 @@ div>span>a{
 .nav-bg{
     background-color: #fff;
     margin: 0.2rem;
-    padding: 0.2rem;
+    padding: 0.4rem;
 }
 
-.tm-card{
-    background: rgb(255, 255, 255);
-    border-radius: 4px;
+.tm-card,.add-form-section{
+    background: var(--tm-white);
+    border-radius: .25rem;
     box-shadow: 0 .5rem .5rem rgba(0,0,0,.2);
 }
 
@@ -89,4 +90,15 @@ div>span>a{
 .completed{
     background-color: var(--completed);
 }
+.form-label{
+    font-weight: 400;
+}
+.form-control{
+    font-weight: 200;
+}
+.nav-item{
+    font-weight: 400;
+    font-size: 1.5rem;
+}
+
 

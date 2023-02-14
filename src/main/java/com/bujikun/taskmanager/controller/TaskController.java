@@ -25,12 +25,12 @@ public class TaskController {
         page.addAttribute("taskdto",new TaskDTO());
         return "/task/add";
     }
-    @PostMapping(value = "/add")
+    @PostMapping( "/add")
     public String createNewTask(@ModelAttribute TaskDTO taskDTO, Model page){
         //do validation
         taskService.createTask(taskDTO);
         page.addAttribute("tasks",taskService.findAll());
-        return "task/index";
+        return "redirect:/tasks";
     }
 
     @GetMapping("/delete/{slug}")
@@ -39,6 +39,19 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
-
+    @GetMapping("/edit/{slug}")
+    public String getTaskToEdit(@PathVariable String slug, Model page){
+        var task = taskService.findTaskBySlug(UUID.fromString(slug));
+        page.addAttribute("taskdto",task);
+        return "task/edit";
+    }
+    @PostMapping("/edit/{slug}")
+    public String editTask(@ModelAttribute TaskDTO taskDTO, @PathVariable("slug")UUID slug, Model page){
+        //do validation
+        taskDTO.setSlug(slug);
+        taskService.updateTask(taskDTO);
+        page.addAttribute("tasks",taskService.findAll());
+        return "redirect:/tasks";
+    }
 
 }
