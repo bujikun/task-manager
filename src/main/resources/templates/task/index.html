@@ -52,27 +52,33 @@
     </div>
 
     <div class="my-1">
-        <div th:if="${#lists.size(tasks)==0}" class="my-5 bg-danger no-tasks">
-            <p>
-                <span><i class="fas fa-sad-tear fa-5x"></i></span>
-                <span>No tasks available. Please consider adding some!</span>
-            </p>
+        <div th:if="${#lists.size(tasks)==0}" class="my-5 bg-danger no-tasks d-flex flex-column justify-content-center
+         align-items-center">
+            <div class="m-2">
+                <span><i class="fas fa-sad-tear fa-10x"></i></span>
+
+            </div>
+
+            <div class="m-2">
+                <span style="font-weight: 400;font-size: 3rem">No tasks available.<br/> Please consider adding some!</span>
+
+            </div>
         </div>
         <ul class="list-group list-unstyled">
-            <li th:each="task:${tasks}" class="list-group-item card tm-card my-1" >
+            <li th:each="task:${tasks}" class="list-group-item card tm-card my-1">
                 <div class="task-list-item">
                     <div class="card-title d-flex flex-row justify-content-between"><!--title-->
                         <div class="d-flex flex-row justify-content-between align-baseline tm-card-title-pill">
                             <div class="mt-1 me-3 pb-0">
                                 <h6 th:text="${task.getTitle()}"></h6>&nbsp;&nbsp;
                             </div>
-                            <div th:if="${task.getStatus()=='NOT STARTED'}" >
+                            <div th:if="${task.getStatus()=='NOT STARTED'}">
                                 <span th:text="${task.getStatus()}" class="badge box-not-started px-2"></span>
                             </div>
-                            <div th:if="${task.getStatus()=='IN PROGRESS'}" >
+                            <div th:if="${task.getStatus()=='IN PROGRESS'}">
                                 <span th:text="${task.getStatus()}" class="badge box-in-progress px-2"></span>
                             </div>
-                            <div th:if="${task.getStatus()=='COMPLETED'}" >
+                            <div th:if="${task.getStatus()=='COMPLETED'}">
                                 <span th:text="${task.getStatus()}" class="badge box-completed px-2"></span>
                             </div>
                             <div class="ps-1">
