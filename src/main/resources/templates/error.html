@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks</title>
+</head>
+<body>
+<div class="collapse navbar-collapse" id="navbarSupportedContent" layout:fragment="dynamic-nav">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item ">
+            <a class="nav-link" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item mx-1">
+            <a class="nav-link" th:href="@{/tasks}">Tasks</a>
+        </li>
+        <li class="nav-item mx-1">
+            <a class="nav-link" href="#">Users</a>
+        </li>
+    </ul>
+</div>
+<div layout:fragment="page-content" class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+    <div class="my-1">
+        <div class="my-5 bg-danger no-tasks d-flex flex-column justify-content-center
+         align-items-center">
+            <div class="m-2">
+                <span><i class="fas fa-sad-frown fa-10x"></i></span>
+            </div>
+
+            <div class="m-2">
+                <span style="font-weight: 400;font-size: 3rem">Oooooops...!<br/> Something went wrong. Please contact the
+                  System Administrator</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

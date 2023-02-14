@@ -49,16 +49,16 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public void deleteTask(UUID id) {
+    public void deleteTask(String id) {
 //check if task exist to find to report error when findBySlug throws exception
         var task = findTaskById(id);
         taskRepository.delete(task);
     }
 
     @Override
-    public void updateTask(TaskDTO taskDTO) {
+    public void updateTask(String id,TaskDTO taskDTO) {
         //find the task to be updated first
-        var task = findTaskById(taskDTO.getId());
+        var task = findTaskById(id);
         task.setTitle(taskDTO.getTitle());
         task.setDescription(taskDTO.getDescription());
         task.setStatus(Status.valueOf(taskDTO.getStatus()));
@@ -68,8 +68,16 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public Task findTaskById(UUID id) {
-         return taskRepository.findById(id)
+    public Task findTaskById(String id) {
+        UUID uuid ;
+        try{
+            uuid= UUID.fromString(id);
+
+        }catch (IllegalArgumentException e){
+            throw new TaskNotFoundException("Task with slug:  "+id +" " +
+                    "could no t be found!");
+        }
+         return taskRepository.findById(uuid)
                 .orElseThrow(()->new TaskNotFoundException("Task with slug:  "+id +" " +
                         "could no t be found!"));
     }

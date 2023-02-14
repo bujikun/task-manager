@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class TaskExceptionControllerAdvice {
     @ExceptionHandler(TaskNotFoundException.class)
     public String taskNotFound(TaskNotFoundException e){
-        return "";
+        return "error";
     }
 }
