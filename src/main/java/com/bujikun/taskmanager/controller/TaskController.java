@@ -2,7 +2,7 @@ package com.bujikun.taskmanager.controller;
 
 import com.bujikun.taskmanager.dto.TaskDTO;
 import com.bujikun.taskmanager.enumeration.Status;
-import com.bujikun.taskmanager.service.implementation.TaskService;
+import com.bujikun.taskmanager.service.contract.ITaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/tasks")
 @RequiredArgsConstructor
 public class TaskController {
-    private final TaskService taskService;
+    private final ITaskService taskService;
+
 
     @GetMapping("/")
     public String getAllRedirect() {
