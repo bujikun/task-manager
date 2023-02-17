@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<div class="collapse navbar-collapse" id="navbarSupportedContent" layout:fragment="dynamic-nav">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item ">
+            <a class="nav-link" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item mx-1">
+            <a class="nav-link" th:href="@{/tasks}">Tasks</a>
+        </li>
+        <li class="nav-item mx-1">
+            <a class="nav-link active" th:href="@{/users}">Users</a>
+        </li>
+    </ul>
+</div>
+<div layout:fragment="page-content" class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+    <!--    <div><span class="display-6">Task management platform</span></div>-->
+    <div class="d-flex flex-wrap justify-content-between my-4">
+        <div class="summary-box m-2" th:if="${#lists.size(users)>0}">
+            <div class="d-flex flex-column justify-content-center align-items-center box-not-started">
+<!--                <p class="display-2" th:text="${notStarted}"></p>-->
+                <p>Active Users</p>
+            </div>
+        </div>
+
+        <div class="summary-box m-2" th:if="${#lists.size(users)>0}">
+            <div class="d-flex flex-column justify-content-center align-items-center box-in-progress">
+<!--                <p class="display-2" th:text="${inProgress}"></p>-->
+                <p>Disabled</p>
+            </div>
+        </div>
+
+
+        <div class="summary-box m-2" th:if="${#lists.size(users)>0}">
+            <div class="d-flex flex-column justify-content-center align-items-center box-completed">
+<!--                <p class="display-2" th:text="${completed}"></p>-->
+                <p>Online users</p>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end align-items-start my-1">
+            <a class="btn btn-secondary btn-sm" th:href="@{/users/add}"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add new
+                task</a>
+        </div>
+    </div>
+
+    <div class="my-1">
+        <div th:if="${#lists.size(users)==0}" class="my-5 bg-danger no-tasks d-flex flex-column justify-content-center
+         align-items-center">
+            <div class="m-2">
+                <span><i class="fas fa-sad-tear fa-10x"></i></span>
+
+            </div>
+
+            <div class="m-2">
+                <span style="font-weight: 400;font-size: 3rem">No tasks available.<br/> Please consider adding some!</span>
+
+            </div>
+        </div>
+        <ul class="list-group list-unstyled">
+            <li th:each="user:${users}" class="list-group-item card tm-card my-1">
+                <div class="task-list-item">
+                    <div class="card-title d-flex flex-row justify-content-between"><!--title-->
+                        <div class="d-flex flex-row justify-content-between align-baseline tm-card-title-pill">
+                            <div class="mt-1 me-3 pb-0">
+                                <h6 th:text="${user.getFirstName()()}"></h6>&nbsp;&nbsp;
+                            </div>
+<!--                            <div th:if="${user.getLastName()=='NOT STARTED'}">-->
+<!--                                <span th:text="${task.getStatus()}" class="badge box-not-started px-2"></span>-->
+<!--                            </div>-->
+<!--                            <div th:if="${task.getStatus()=='IN PROGRESS'}">-->
+<!--                                <span th:text="${task.getStatus()}" class="badge box-in-progress px-2"></span>-->
+<!--                            </div>-->
+<!--                            <div th:if="${task.getStatus()=='COMPLETED'}">-->
+<!--                                <span th:text="${task.getStatus()}" class="badge box-completed px-2"></span>-->
+<!--                            </div>-->
+<!--                            <div class="ps-1">-->
+<!--                                <span th:text="${task.getPriority()}" class="badge priority-pill px-1"></span>-->
+<!--                            </div>-->
+                        </div>
+<!--                        <div class="">-->
+<!--                                <span><a th:href="@{/tasks/edit/{slug}(slug=${task.getId()})}" class="task-edit"-->
+<!--                                         title="Edit">-->
+<!--                                    <i class="fas fa-edit"></i></a></span>&nbsp;-->
+<!--                            <span>-->
+<!--                                    <a th:href="@{/tasks/delete/{slug}(slug=${task.getId()})}" class="task-delete"-->
+<!--                                       title="Delete">-->
+<!--                                    <i class="fas fa-trash"></i></a>-->
+<!--                                </span>-->
+<!--                        </div>-->
+                    </div>
+                    <div><!--body-->
+                        <p th:text="${user.getLastName()}" class="tm-card-desc"></p>
+                    </div>
+                    <div class="d-flex flex-row justify-content-end align-baseline"><!--footer-->
+                        <span th:text="${user.getCreatedOn()}"
+                              class="text-muted tm-card-created-on"></span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+</html>
