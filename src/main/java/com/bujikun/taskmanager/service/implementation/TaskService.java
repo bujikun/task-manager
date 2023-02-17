@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -26,19 +27,21 @@ import java.util.stream.Collectors;
 @Transactional
 public class TaskService implements ITaskService {
     private final TaskRepository taskRepository;
+    private Function<Task, TaskDTO> convertTaskToDTO =
+            (t) -> TaskDTO.builder()
+                    .title(t.getTitle())
+                    .description(t.getDescription())
+                    .status(t.getStatus().getValue())
+                    .priority(t.getPriority().getValue())
+                    .id(t.getId())
+                    .createdOn(Util.formatDateTime(t.getCreatedOn()))
+                    .updatedOn(Util.formatDateTime(t.getUpdatedOn()))
+                    .build();
 
     @Override
     public List<TaskDTO> findAll() {
         return taskRepository.findAll(Sort.by(Sort.Direction.DESC, "createdOn")).stream()
-                .map(t -> TaskDTO.builder()
-                        .title(t.getTitle())
-                        .description(t.getDescription())
-                        .status(t.getStatus().getValue())
-                        .priority(t.getPriority().getValue())
-                        .id(t.getId())
-                        .createdOn(Util.formatDateTime(t.getCreatedOn()))
-                        .updatedOn(Util.formatDateTime(t.getUpdatedOn()))
-                        .build())
+                .map(convertTaskToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -86,6 +89,5 @@ public class TaskService implements ITaskService {
                 .orElseThrow(() -> new TaskNotFoundException("Task with slug:  " + id + " " +
                         "could no t be found!"));
     }
-
 
 }

@@ -22,7 +22,7 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "users")
-public class User {
+public class User{
     @Id
     @GeneratedValue
     private UUID id;
