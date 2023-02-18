@@ -1,58 +1,66 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Task Manager - Login</title>
-  <link rel="preload" as="font" href="/font/Roboto-Regular.ttf"
-        type="font/ttf" crossorigin/>
-  <link rel="stylesheet" href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
-  <link rel="stylesheet" href="/webjars/font-awesome/5.15.1/css/all.css"/>
-  <link rel="stylesheet" href="/css/base.css"/>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
-  <style>
-    @font-face {
-      font-family: Roboto;
-      font-display: swap;
-      src: url("/font/Roboto-Regular.ttf") format("truetype");
-    }
-  </style>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Task Manager - Login</title>
+    <link rel="preload" as="font" href="/font/Roboto-Regular.ttf"
+          type="font/ttf" crossorigin/>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/webjars/font-awesome/5.15.1/css/all.css"/>
+    <link rel="stylesheet" href="/css/base.css"/>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+    <style>
+        @font-face {
+            font-family: Roboto;
+            font-display: swap;
+            src: url("/font/Roboto-Regular.ttf") format("truetype");
+        }
+        .centered{
+            margin: .5rem;
+            position:absolute;
+            top:50%;
+            left: 50%;
+            -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            width: 400px;
+            max-width: 500px;
+            text-align: center;
+        }
+        h6{
+            color: var(--color-tm-white);
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-  <div class="row my-3">
-    <div class="col-md-3 col-lg-2 col-xl-2"></div>
-    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8" layout:fragment="page-content">
-      <!--  Page content goes here!-->
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" disabled>Disabled</button>
-        </li>
-      </ul>
-      <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">A</div>
-        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">B</div>
-        <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">C</div>
-        <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">D</div>
-      </div>
-
-      <!--      -->
+            <div class="centered p-4">
+                <h6 class="bg-secondary p-3">Task Manager Login</h6>
+                <div class="add-form-section p-4">
+                    <div class="mb-1">
+                        <form method="post" th:action="@{/}" class="px-4 pb-2">
+                            <div class="mb-2 mt-1">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" placeholder="" name="title"
+                                       required>
+                            </div>
+                            <div class="my-2">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="text" class="form-control" id="password" placeholder="" name="title"
+                                       required>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-outline-success mb-2 mt-2 form-control"><i
+                                        class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
     </div>
-    <div class="col-md-3 col-lg-2 col-xl-2"></div>
-  </div>
-</div>
-<script src="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
-<script src="/webjars/bootstrap/5.2.0/js/bootstrap.js"></script>
+    <script src="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
+    <script src="/webjars/bootstrap/5.2.0/js/bootstrap.js"></script>
+
 </body>
 </html>
