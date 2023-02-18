@@ -9,10 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since 2023
  */
 @Controller
-//@RequestMapping("/")
-public class HomeController {
+@RequestMapping("/")
+public class AccountController {
     @GetMapping
-    public String home() {
+    public String getRoot(){
         return "redirect:/tasks";
+    }
+
+    @GetMapping("login")
+    public String getLogin(){
+        return "account/login";
     }
 }

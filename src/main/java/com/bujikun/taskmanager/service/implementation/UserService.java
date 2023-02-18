@@ -37,7 +37,7 @@ public class UserService implements IUserService {
     };
     @Override
     public List<UserDTO> findAll() {
-        return userRepository.findAll(Sort.by(Sort.Direction.DESC,"created_on"))
+        return userRepository.findAll(Sort.by(Sort.Direction.DESC,"createdOn"))
                 .stream()
                 .map(userToDTO)
                 .toList();
