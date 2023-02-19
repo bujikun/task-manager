@@ -3,12 +3,13 @@ package com.bujikun.taskmanager.security.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 /**
  * @author Newton Bujiku
@@ -19,42 +20,54 @@ import org.springframework.security.web.SecurityFilterChain;
 public class AppSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-       return httpSecurity
-               .authorizeHttpRequests(req->req.requestMatchers("/font/**").permitAll()
-                       .requestMatchers("/webjars/**").permitAll()
-                       .requestMatchers("/css/**").permitAll()
-                       .requestMatchers("/js/**").permitAll()
-                       .requestMatchers("/login").permitAll()
-                       .requestMatchers("/img/**").permitAll()
-                       .anyRequest().authenticated())
-               .formLogin(f->f.loginPage("/login")
-                               .failureForwardUrl("/login")
-                               .defaultSuccessUrl("/")
-                               .usernameParameter("username")
-                               .passwordParameter("password")
-                               .isCustomLoginPage()
-                       )
-               .logout(l->l.logoutUrl("/logout")
-                       .logoutSuccessUrl("/login")
-                       .invalidateHttpSession(true)
-                       .clearAuthentication(true)
-                       .permitAll()
-                       )
-               .build();
+        return httpSecurity
+                .authorizeHttpRequests(req -> req.requestMatchers("/font/**").permitAll()
+                        .requestMatchers("/webjars/**").permitAll()
+                        .requestMatchers("/css/**").permitAll()
+                        .requestMatchers("/js/**").permitAll()
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/img/**").permitAll()
+                        .anyRequest().authenticated())
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                        .invalidSessionUrl("/login").sessionFixation(sf->sf.migrateSession())
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(false)
+                        .expiredUrl("/login")
+                )
+                .formLogin(f -> f.loginPage("/login")
+                        .defaultSuccessUrl("/")
+                        .usernameParameter("username")
+                        .passwordParameter("password")
+                        .failureUrl("/login")
+                        .isCustomLoginPage()
+                )
+                .logout()
+                .logoutUrl("/logout").permitAll()
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .clearAuthentication(true)
+                .and()
+                .build();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsService(){
+    public InMemoryUserDetailsManager userDetailsService() {
         var user = User.withUsername("admin")
                 .password("password")
-                .passwordEncoder(p-> passwordEncoder().encode(p))
+                .passwordEncoder(p -> passwordEncoder().encode(p))
                 .authorities("read")
                 .build();
         return new InMemoryUserDetailsManager(user);
+    }
+
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 }
