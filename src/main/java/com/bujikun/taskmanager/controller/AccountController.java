@@ -6,13 +6,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationContext;
+import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -59,9 +66,20 @@ public class AccountController {
         return "account/register";
     }
     @PostMapping("/register")
-    public String doRegister(Model page, @ModelAttribute UserDTO userDTO) {
+    public String doRegister(@ModelAttribute UserDTO userDTO,HttpServletRequest request) {
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("read"),
+                new SimpleGrantedAuthority("write"));
         userService.createUser(userDTO);
-        page.addAttribute("user",new UserDTO());
+        userDTO.setPassword(null);
+        //start login process here
+        //get userdetails from loginservice and vthen create auth token
+       var ctx= SecurityContextHolder.createEmptyContext();
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDTO,null,
+               authorities
+        );
+        //authToken.setAuthenticated(true);
+        ctx.setAuthentication(authToken);
+        request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,ctx);
         return "redirect:/";
     }
 }
