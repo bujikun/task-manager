@@ -9,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * @author Newton Bujiku
@@ -23,20 +25,14 @@ public class AccountController {
     public String getRoot() {
         return "redirect:/tasks";
     }
-
     @GetMapping("/login")
-    public String getLogin(Model page) {
-        final var failed = false;
-        page.addAttribute("failed",failed);
+    public String handleLoginError(Model page, @RequestParam(required = false) String error) {
+        if(Optional.ofNullable(error).isPresent() && error.equals("true")){
+            page.addAttribute("failed",true);
+        }else{
+            page.addAttribute("failed",false);
+        }
         return "account/login";
-    }
-
-    @GetMapping("/invalid-login")
-    public String handleLoginError(Model page) {
-        final var failed = true;
-        page.addAttribute("failed",failed);
-        return "account/login";
-        //throw new RuntimeException();
     }
     @GetMapping("/logout")
     public String doLogout(HttpSession session, HttpServletResponse response,

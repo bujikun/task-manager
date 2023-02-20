@@ -16,17 +16,19 @@
             font-display: swap;
             src: url("/font/Roboto-Regular.ttf") format("truetype");
         }
-        .centered{
+
+        .centered {
             margin: .5rem;
-            position:absolute;
-            top:50%;
+            position: absolute;
+            top: 40%;
             left: 50%;
-            -ms-transform: translate(-50%,-50%);
-            transform: translate(-50%,-50%);
-            width: 400px;
-            max-width: 500px;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            width: 360px;
+            max-width: 400px;
         }
-        h6{
+
+        h6 {
             color: var(--color-tm-white);
             text-align: center;
 
@@ -35,36 +37,39 @@
 </head>
 <body>
 <div class="container">
-            <div class="centered p-1">
-                <h6 class="bg-secondary p-3">Task Manager Login</h6>
-                <div th:if="${failed}">
-                    <div class="alert alert-danger alert-dismissible">Invalid username or password!</div>
-                </div>
-                <div class="add-form-section p-2">
-                    <div class="mb-1">
-                        <form method="post" th:action="@{/login}" class="px-4 pb-2">
-                            <div class="mb-2 mt-1">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" placeholder="" name="username"
-                                       required>
-                            </div>
-                            <div class="my-2">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="" name="password"
-                                       required>
-                            </div>
-                            <div>
-                                <button type="submit" class="btn btn-outline-success mb-2 mt-2 form-control"><i
-                                        class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Submit
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+    <div class="centered p-1">
+        <h6 class="bg-secondary p-3">Task Manager Login</h6>
+        <div th:if="${failed}">
+            <div class="alert alert-danger alert-dismissible">Invalid username or password!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+        </div>
+        <div class="add-form-section p-2">
+            <div class="mb-1">
+                <form method="post" th:action="@{/login}" class="px-4 pb-2">
+                    <div class="mb-2 mt-1">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" placeholder="" name="username"
+                               required>
+                    </div>
+                    <div class="my-2">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="" name="password"
+                               required>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-outline-success mb-2 mt-2 form-control"><i
+                                class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <script src="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
-    <script src="/webjars/bootstrap/5.2.0/js/bootstrap.js"></script>
-
+</div>
+<script src="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
+<script src="/webjars/bootstrap/5.2.0/js/bootstrap.js"></script>
+<script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+<script src="/js/base.js"></script>
 </body>
 </html>
