@@ -9,6 +9,7 @@ import com.bujikun.taskmanager.util.Util;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,12 +26,11 @@ import java.util.function.Function;
 @Transactional
 public class UserService implements IUserService {
     private final UserRepository userRepository;
-
+    private final PasswordEncoder passwordEncoder;
     Function<User,UserDTO> userToDTO = (u)->{
         return UserDTO.builder()
-                .firstName(u.getFirstName())
-                .lastName(u.getLastName())
-                .email(u.getEmail())
+                .fullName(u.getFullName())
+                .username(u.getUsername())
                 .createdOn(Util.formatDateTime(u.getCreatedOn()))
                 .id(u.getId().toString())
                 .build();
@@ -45,11 +45,9 @@ public class UserService implements IUserService {
     @Override
     public void createUser(UserDTO userDTO) {
         var user = User.builder()
-                .firstName(userDTO.getFirstName())
-                .lastName(userDTO.getLastName())
-                .password(userDTO.getPassword())
+                .fullName(userDTO.getFullName())
+                .password(passwordEncoder.encode(userDTO.getPassword()))
                 .username(userDTO.getUsername())
-                .email(userDTO.getEmail())
                 .build();
         userRepository.save(user);
     }
@@ -57,11 +55,9 @@ public class UserService implements IUserService {
     @Override
     public void updateUser(String id,UserDTO userDTO) {
         var user = findUserById(id);
-          user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
+          user.setFullName(userDTO.getFullName());
         user.setPassword(userDTO.getPassword());
         user.setUsername(userDTO.getUsername());
-        user.setEmail(userDTO.getEmail());
         userRepository.save(user);
     }
 

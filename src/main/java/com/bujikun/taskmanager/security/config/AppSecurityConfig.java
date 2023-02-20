@@ -37,6 +37,7 @@ public class AppSecurityConfig {
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/img/**").permitAll()
+                        .requestMatchers("/register").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                         .invalidSessionUrl("/login").sessionFixation(sf->sf.migrateSession())

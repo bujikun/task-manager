@@ -30,12 +30,9 @@ public class User{
     private String username;
     @Column(nullable = false, length = 20)
     private String password;
-    @Column(nullable = false, length = 20)
-    private String firstName;
-    @Column(nullable = false, length = 20)
-    private String lastName;
     @Column(nullable = false)
-    private String email;
+    private String fullName;
+    @Column(nullable = false, length = 100)
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp

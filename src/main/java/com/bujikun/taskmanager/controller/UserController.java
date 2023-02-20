@@ -23,6 +23,4 @@ public class UserController {
         return "user/index";
     }
 
-
-
 }
