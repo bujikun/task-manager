@@ -37,6 +37,9 @@
 <div class="container">
             <div class="centered p-1">
                 <h6 class="bg-secondary p-3">Task Manager Login</h6>
+                <div th:if="${failed}">
+                    <div class="alert alert-danger alert-dismissible">Invalid username or password!</div>
+                </div>
                 <div class="add-form-section p-2">
                     <div class="mb-1">
                         <form method="post" th:action="@{/login}" class="px-4 pb-2">

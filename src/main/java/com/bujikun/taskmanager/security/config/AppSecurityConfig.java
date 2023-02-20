@@ -1,15 +1,23 @@
 package com.bujikun.taskmanager.security.config;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @author Newton Bujiku
@@ -17,7 +25,9 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
  */
 
 @Configuration
+@RequiredArgsConstructor
 public class AppSecurityConfig {
+   // private final HttpSession session;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -26,6 +36,7 @@ public class AppSecurityConfig {
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/invalid-login").permitAll()
                         .requestMatchers("/img/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
@@ -38,18 +49,40 @@ public class AppSecurityConfig {
                         .defaultSuccessUrl("/")
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .failureUrl("/login")
+                        .failureUrl("/invalid-login")
                         .isCustomLoginPage()
                 )
                 .logout()
                 .logoutUrl("/logout").permitAll()
                 .logoutSuccessUrl("/login")
+                //.addLogoutHandler(logoutHandler(session))
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .clearAuthentication(true)
                 .and()
                 .build();
     }
+
+//    @Bean
+//    public LogoutHandler logoutHandler(HttpSession session){
+//        return (request,response,authentication)->{
+//            session.invalidate();
+//            //authentication.setAuthenticated(false);
+//            SecurityContextHolder.getContext().setAuthentication(null);
+//            Arrays.stream(request.getCookies())
+//                            .map(c->{
+//                                c.setValue(null);
+//                                return c;
+//                            }).forEach(c->response.addCookie(c));
+//            try {
+//                response.sendRedirect("/login");
+//                throw new RuntimeException();
+//
+//            } catch (IOException e) {
+//            }
+//            // response.addCookie(new Cookie("JSESSIONID",";"));
+//        };
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
