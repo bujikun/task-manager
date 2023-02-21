@@ -101,6 +101,7 @@ public class AppSecurityConfig {
 
     @Bean
     public HttpSessionEventPublisher httpSessionEventPublisher() {
+        //for handling session fixation
         return new HttpSessionEventPublisher();
     }
 }
