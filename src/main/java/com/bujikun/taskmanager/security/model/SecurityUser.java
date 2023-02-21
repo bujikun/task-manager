@@ -29,7 +29,7 @@ public class SecurityUser implements UserDetails {
                 .flatMap(role -> role.getPermissions()
                         .stream()
                         .map(p -> new SimpleGrantedAuthority(p.getName())))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toUnmodifiableSet());
 
     }
 

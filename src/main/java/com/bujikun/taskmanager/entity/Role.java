@@ -30,7 +30,7 @@ public class Role {
     private String name;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<User> users;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "roles_permissions", joinColumns = {@JoinColumn(name = "fk_role_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "fk_permission_id", referencedColumnName = "id")})
     private Set<Permission> permissions;

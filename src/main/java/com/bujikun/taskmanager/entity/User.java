@@ -45,7 +45,7 @@ public class User {
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = {@JoinColumn(name = "fk_user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "fk_role_id", referencedColumnName = "id")})
     private Set<Role> roles;
