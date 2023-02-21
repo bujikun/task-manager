@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Set;
-import java.util.UUID;
+
 /**
  * @author Newton Bujiku
  * @since 2023
@@ -20,15 +20,15 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "roles")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(unique = true,
-    nullable = false)
+            nullable = false)
     private String name;
-    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "roles",fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<User> users;
     @ManyToMany
     @JoinTable(name = "roles_permissions", joinColumns = {@JoinColumn(name = "fk_role_id", referencedColumnName = "id")},

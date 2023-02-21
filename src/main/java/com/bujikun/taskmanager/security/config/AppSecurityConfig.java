@@ -1,5 +1,6 @@
 package com.bujikun.taskmanager.security.config;
 
+import com.bujikun.taskmanager.security.service.SecurityUserDetailService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -89,15 +90,15 @@ public class AppSecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        var user = User.withUsername("admin")
-                .password("password")
-                .passwordEncoder(p -> passwordEncoder().encode(p))
-                .authorities("read")
-                .build();
-        return new InMemoryUserDetailsManager(user);
-    }
+ //   @Bean
+//    public InMemoryUserDetailsManager userDetailsService() {
+//        var user = User.withUsername("admin")
+//                .password("password")
+//                .passwordEncoder(p -> passwordEncoder().encode(p))
+//                .authorities("read")
+//                .build();
+//        return new InMemoryUserDetailsManager(user);
+//    }
 
     @Bean
     public HttpSessionEventPublisher httpSessionEventPublisher() {

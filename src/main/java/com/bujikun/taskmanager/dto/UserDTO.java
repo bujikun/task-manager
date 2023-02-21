@@ -2,6 +2,10 @@ package com.bujikun.taskmanager.dto;
 
 import lombok.*;
 
+/**
+ * @author Newton Bujiku
+ * @since 2023
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter

@@ -25,8 +25,8 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "users")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
-public class User{
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -34,15 +34,23 @@ public class User{
     private String username;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false,length = 100)
+    @Column(nullable = false, length = 100)
     private String fullName;
+    private Boolean isAccountExpired;
+    private Boolean isAccountLocked;
+    private Boolean isCredentialsLocked;
+    private Boolean isEnabled;
     @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
     @ManyToMany
-    @JoinTable(name ="users_roles",joinColumns = {@JoinColumn(name="fk_user_id",referencedColumnName = "id")},
-            inverseJoinColumns ={@JoinColumn(name = "fk_role_id",referencedColumnName = "id")} )
+    @JoinTable(name = "users_roles", joinColumns = {@JoinColumn(name = "fk_user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_role_id", referencedColumnName = "id")})
     private Set<Role> roles;
+
+    {
+        isEnabled = true;
+    }
 }
