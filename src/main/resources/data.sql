@@ -30,5 +30,7 @@ select @last_inserted_id :=max(roles.id) from roles;
 insert into roles_permissions(fk_role_id, fk_permission_id)  values ( @last_inserted_id,1);
 insert into roles_permissions(fk_role_id, fk_permission_id)  values ( @last_inserted_id,2);
 insert into roles_permissions(fk_role_id, fk_permission_id)  values ( @last_inserted_id,3);
+insert into users_roles (fk_user_id, fk_role_id)
+values (1,1);
 commit;
-select * from `users`;
+select * from `users_roles`;

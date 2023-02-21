@@ -64,41 +64,10 @@ public class AppSecurityConfig {
                 .build();
     }
 
-//    @Bean
-//    public LogoutHandler logoutHandler(HttpSession session){
-//        return (request,response,authentication)->{
-//            session.invalidate();
-//            //authentication.setAuthenticated(false);
-//            SecurityContextHolder.getContext().setAuthentication(null);
-//            Arrays.stream(request.getCookies())
-//                            .map(c->{
-//                                c.setValue(null);
-//                                return c;
-//                            }).forEach(c->response.addCookie(c));
-//            try {
-//                response.sendRedirect("/login");
-//                throw new RuntimeException();
-//
-//            } catch (IOException e) {
-//            }
-//            // response.addCookie(new Cookie("JSESSIONID",";"));
-//        };
-//    }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-
- //   @Bean
-//    public InMemoryUserDetailsManager userDetailsService() {
-//        var user = User.withUsername("admin")
-//                .password("password")
-//                .passwordEncoder(p -> passwordEncoder().encode(p))
-//                .authorities("read")
-//                .build();
-//        return new InMemoryUserDetailsManager(user);
-//    }
 
     @Bean
     public HttpSessionEventPublisher httpSessionEventPublisher() {

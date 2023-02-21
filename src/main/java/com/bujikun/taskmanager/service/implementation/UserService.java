@@ -1,6 +1,7 @@
 package com.bujikun.taskmanager.service.implementation;
 
 import com.bujikun.taskmanager.dto.UserDTO;
+import com.bujikun.taskmanager.entity.Role;
 import com.bujikun.taskmanager.entity.User;
 import com.bujikun.taskmanager.exception.user.UserNotFoundException;
 import com.bujikun.taskmanager.repository.UserRepository;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
@@ -44,10 +46,19 @@ public class UserService implements IUserService {
     }
     @Override
     public void createUser(UserDTO userDTO) {
+        var roles = new HashSet<Role>();
+        var role = new Role();
+        role.setId(2);
+        roles.add(role);
         var user = User.builder()
                 .fullName(userDTO.getFullName())
                 .password(passwordEncoder.encode(userDTO.getPassword()))
                 .username(userDTO.getUsername())
+                .isAccountExpired(false)
+                .isEnabled(true)
+                .isAccountLocked(false)
+                .isCredentialsLocked(false)
+                .roles(roles)
                 .build();
         userRepository.save(user);
     }
