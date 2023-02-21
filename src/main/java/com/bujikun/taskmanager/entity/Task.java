@@ -26,8 +26,8 @@ import java.util.UUID;
 @Table(name = "tasks")
 public class Task {
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)

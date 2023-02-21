@@ -28,8 +28,8 @@ import java.util.UUID;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class User{
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(nullable = false, length = 20)
     private String username;
     @Column(nullable = false)
@@ -41,7 +41,8 @@ public class User{
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
-    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "users",fetch = FetchType.EAGER)
+    @ManyToMany
+    @JoinTable(name ="users_roles",joinColumns = {@JoinColumn(name="fk_user_id",referencedColumnName = "id")},
+            inverseJoinColumns ={@JoinColumn(name = "fk_role_id",referencedColumnName = "id")} )
     private Set<Role> roles;
-
 }

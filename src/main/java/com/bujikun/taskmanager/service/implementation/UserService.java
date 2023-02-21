@@ -69,7 +69,7 @@ public class UserService implements IUserService {
 
     @Override
     public User findUserById(String id) {
-        return userRepository.findById(UUID.fromString(id))
+        return userRepository.findById(Integer.valueOf(id))
                 .orElseThrow(() -> new UserNotFoundException("User with a given ID: " + id + " not found"));
     }
 

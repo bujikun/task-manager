@@ -23,15 +23,15 @@ import java.util.UUID;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Role {
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(unique = true,
     nullable = false)
     private String name;
     @ManyToMany(cascade = CascadeType.ALL,mappedBy = "roles",fetch = FetchType.EAGER)
-    private Set<Permission> permissions;
-    @ManyToMany
-    @JoinTable(name ="users_roles",joinColumns = {@JoinColumn(name="fk_user_id",referencedColumnName = "id")},
-            inverseJoinColumns ={@JoinColumn(name = "fk_role_id",referencedColumnName = "id")} )
     private Set<User> users;
+    @ManyToMany
+    @JoinTable(name = "roles_permissions", joinColumns = {@JoinColumn(name = "fk_role_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_permission_id", referencedColumnName = "id")})
+    private Set<Permission> permissions;
 }

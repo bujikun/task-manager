@@ -11,7 +11,7 @@ import java.util.UUID;
  * @author Newton Bujiku
  * @since 2023
  */
-public interface UserRepository extends JpaRepository<User,UUID> {
+public interface UserRepository extends JpaRepository<User,Integer> {
     @Query("SELECT u FROM User u WHERE u.username=:username")
     Optional<User> findUserByUsername(String username);
 }

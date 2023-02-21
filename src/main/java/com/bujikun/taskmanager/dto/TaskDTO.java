@@ -20,7 +20,7 @@ public class TaskDTO {
     private String description;
     private String status;
     private String priority;
-    private UUID id;
+    private Integer id;
     private String createdOn;
     private String updatedOn;
 }

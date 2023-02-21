@@ -1,0 +1,16 @@
+begin;
+insert into `roles`(name) values("ADMIN");
+select @last_inserted_id :=max(roles.id) from roles;
+insert into permissions(name) values("read task");
+insert into permissions(name) values("edit task");
+insert into permissions(name) values("delete task");
+insert into permissions(name) values("read user");
+insert into permissions(name) values("edit user");
+insert into permissions(name) values("delete user");
+insert into roles_permissions(fk_role_id, fk_permission_id)  values ( @last_inserted_id,1);
+insert into roles_permissions(fk_role_id, fk_permission_id)  values ( @last_inserted_id,2);
+insert into roles_permissions(fk_role_id, fk_permission_id)  values ( @last_inserted_id,3);
+insert into roles_permissions(fk_role_id, fk_permission_id)  values ( @last_inserted_id,4);
+insert into roles_permissions(fk_role_id, fk_permission_id)  values ( @last_inserted_id,5);
+insert into roles_permissions(fk_role_id, fk_permission_id)  values ( @last_inserted_id,6);
+commit;

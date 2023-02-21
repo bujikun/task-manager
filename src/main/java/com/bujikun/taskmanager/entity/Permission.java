@@ -8,6 +8,11 @@ import lombok.*;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * @author Newton Bujiku
+ * @since 2023
+ */
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -16,14 +21,12 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "permissions")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Permission {
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String name;
-    @ManyToMany
-    @JoinTable(name = "roles_permissions",joinColumns = {@JoinColumn(name = "fk_role_id",referencedColumnName = "id")},
-    inverseJoinColumns = {@JoinColumn(name = "fk_permission_id",referencedColumnName = "id")})
+    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "permissions",fetch = FetchType.EAGER)
     private Set<Role> roles;
 }

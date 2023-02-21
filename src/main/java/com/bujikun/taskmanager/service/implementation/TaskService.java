@@ -77,9 +77,9 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task findTaskById(String id) {
-        UUID uuid;
+        Integer uuid;
         try {
-            uuid = UUID.fromString(id);
+            uuid =Integer.valueOf(id);
 
         } catch (IllegalArgumentException e) {
             throw new TaskNotFoundException("Task with slug:  " + id + " " +

@@ -9,5 +9,5 @@ import java.util.UUID;
  * @author Newton Bujiku
  * @since 2023
  */
-public interface TaskRepository extends JpaRepository<Task, UUID> {
+public interface TaskRepository extends JpaRepository<Task, Integer> {
 }
