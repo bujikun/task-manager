@@ -2,6 +2,7 @@ package com.bujikun.taskmanager.service.contract;
 
 import com.bujikun.taskmanager.dto.TaskDTO;
 import com.bujikun.taskmanager.entity.Task;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  */
 public interface ITaskService {
     List<TaskDTO> findAll();
+    List<TaskDTO> findAllByUser(Authentication authentication);
 
     void createTask(TaskDTO taskDTO);
 

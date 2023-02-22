@@ -40,4 +40,7 @@ public class Task {
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_employee_id",referencedColumnName = "id")
+    private User user;
 }

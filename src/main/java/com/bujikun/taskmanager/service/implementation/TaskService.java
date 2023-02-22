@@ -6,11 +6,14 @@ import com.bujikun.taskmanager.enumeration.Priority;
 import com.bujikun.taskmanager.enumeration.Status;
 import com.bujikun.taskmanager.exception.task.TaskNotFoundException;
 import com.bujikun.taskmanager.repository.TaskRepository;
+import com.bujikun.taskmanager.security.model.SecurityUser;
 import com.bujikun.taskmanager.service.contract.ITaskService;
 import com.bujikun.taskmanager.util.Util;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class TaskService implements ITaskService {
     private final TaskRepository taskRepository;
     private Function<Task, TaskDTO> convertTaskToDTO =
@@ -42,7 +46,18 @@ public class TaskService implements ITaskService {
     public List<TaskDTO> findAll() {
         return taskRepository.findAll(Sort.by(Sort.Direction.DESC, "createdOn")).stream()
                 .map(convertTaskToDTO)
-                .collect(Collectors.toList());
+                .toList();
+    }
+
+    @Override
+    public List<TaskDTO> findAllByUser(Authentication authentication) {
+        var securityUser = (SecurityUser) authentication.getPrincipal();
+        var id = securityUser.getUser().getId();
+        log.info("'" +
+                "User ID"+id);
+        return taskRepository.findAllTasksByUserId(id).stream()
+                       .map(convertTaskToDTO)
+                       .toList();
     }
 
     @Override

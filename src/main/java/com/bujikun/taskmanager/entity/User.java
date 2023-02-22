@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -49,8 +50,6 @@ public class User {
     @JoinTable(name = "users_roles", joinColumns = {@JoinColumn(name = "fk_user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "fk_role_id", referencedColumnName = "id")})
     private Set<Role> roles;
-
-    {
-        isEnabled = true;
-    }
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Task> tasks;
 }
