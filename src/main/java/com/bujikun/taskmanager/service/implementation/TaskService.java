@@ -2,6 +2,7 @@ package com.bujikun.taskmanager.service.implementation;
 
 import com.bujikun.taskmanager.dto.TaskDTO;
 import com.bujikun.taskmanager.entity.Task;
+import com.bujikun.taskmanager.entity.User;
 import com.bujikun.taskmanager.enumeration.Priority;
 import com.bujikun.taskmanager.enumeration.Status;
 import com.bujikun.taskmanager.exception.task.TaskNotFoundException;
@@ -17,9 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author Newton Bujiku
@@ -31,6 +30,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TaskService implements ITaskService {
     private final TaskRepository taskRepository;
+    private final UserService userService;
     private Function<Task, TaskDTO> convertTaskToDTO =
             (t) -> TaskDTO.builder()
                     .title(t.getTitle())
@@ -51,22 +51,22 @@ public class TaskService implements ITaskService {
 
     @Override
     public List<TaskDTO> findAllByUser(Authentication authentication) {
-        var securityUser = (SecurityUser) authentication.getPrincipal();
-        var id = securityUser.getUser().getId();
+        var user = getAuthenticatedUserById(authentication);
         log.info("'" +
-                "User ID"+id);
-        return taskRepository.findAllTasksByUserId(id).stream()
+                "User ID"+user.getId());
+        return taskRepository.findAllTasksByUserId(user.getId()).stream()
                        .map(convertTaskToDTO)
                        .toList();
     }
 
     @Override
-    public void createTask(TaskDTO taskDTO) {
+    public void createTask(TaskDTO taskDTO,Authentication authentication) {
         var task = Task.builder()
                 .title(taskDTO.getTitle())
                 .description(taskDTO.getDescription())
                 .status(Status.valueOf(taskDTO.getStatus()))
                 .priority(Priority.valueOf(taskDTO.getPriority()))
+                .user(getAuthenticatedUserById(authentication))
                 .build();
         taskRepository.save(task);
     }
@@ -104,5 +104,12 @@ public class TaskService implements ITaskService {
                 .orElseThrow(() -> new TaskNotFoundException("Task with slug:  " + id + " " +
                         "could no t be found!"));
     }
+
+    private User getAuthenticatedUserById(Authentication authentication) {
+        var securityUser = (SecurityUser) authentication.getPrincipal();
+        var id =   securityUser.getUser().getId();
+        return userService.findUserById(id.toString());
+    }
+
 
 }

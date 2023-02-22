@@ -50,9 +50,9 @@ public class TaskController {
         var allTasks = taskService.findAllByUser(auth);
         Map<String, Long> map = getStatusCount(allTasks);
         page.addAttribute("tasks", allTasks);
-        page.addAttribute(Status.COMPLETED.getValue(), map.get(Status.COMPLETED.getValue()));
-        page.addAttribute(Status.IN_PROGRESS.getValue(), map.get(Status.IN_PROGRESS.getValue()));
-        page.addAttribute(Status.NOT_STARTED.getValue(), map.get(Status.NOT_STARTED.getValue()));
+        page.addAttribute("completed", map.get(Status.COMPLETED.getValue()));
+        page.addAttribute("inProgress", map.get(Status.IN_PROGRESS.getValue()));
+        page.addAttribute("notStarted", map.get(Status.NOT_STARTED.getValue()));
         return "task/index";
     }
 
@@ -63,9 +63,9 @@ public class TaskController {
     }
 
     @PostMapping("/add")
-    public String createNewTask(@ModelAttribute TaskDTO taskDTO, Model page) {
+    public String createNewTask(@ModelAttribute TaskDTO taskDTO, Model page,Authentication auth) {
         //do validation
-        taskService.createTask(taskDTO);
+        taskService.createTask(taskDTO,auth);
         page.addAttribute("tasks", taskService.findAll());
         return "redirect:/tasks";
     }

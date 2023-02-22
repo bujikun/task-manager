@@ -2,6 +2,8 @@ package com.bujikun.taskmanager.repository;
 
 import com.bujikun.taskmanager.dto.TaskDTO;
 import com.bujikun.taskmanager.entity.Task;
+import com.bujikun.taskmanager.entity.User;
+import org.hibernate.annotations.NamedNativeQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
